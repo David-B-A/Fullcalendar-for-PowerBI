@@ -1,0 +1,17 @@
+{
+    "version": "1.0.0",
+    "author": {"name":"OilNet Software S.A.S.","email":"david.bello@oilnetsoftware.com"},
+    "resources": [
+        {
+            "resourceId": "rId0",
+            "sourceType": 5,
+            "file": "resources/fullCalendar39FFF1FDC0C94851ABB1A3DA8F5E89E0.pbiviz.json"
+        }
+    ],
+    "visual": {"name":"fullCalendar","displayName":"fullCalendar","guid":"fullCalendar39FFF1FDC0C94851ABB1A3DA8F5E89E0","visualClassName":"Visual","version":"1.0.0","description":"Full Calendar for power BI","supportUrl":"https://github.com/David-B-A/Fullcalendar-for-PowerBI.git","gitHubUrl":"https://github.com/David-B-A/Fullcalendar-for-PowerBI.git"},
+    "metadata": {
+        "pbivizjson": {
+            "resourceId": "rId0"
+        }
+    }  
+}

@@ -1,0 +1,145 @@
+{
+    "dataRoles": [
+        {
+            "displayName": "Activity",
+            "name": "activity",
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "Plan Date",
+            "name": "planDate",
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "Real Date",
+            "name": "realDate",
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "Status",
+            "name": "status",
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "Url",
+            "name": "url",
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "Tooltip",
+            "name": "tooltip",
+            "kind": "Grouping"
+        }
+    ],
+    "objects": {
+        "categoryColors": {
+            "displayName": "Category Colors",
+            "description": "Define the colors of your categories.",
+            "properties": {
+                "fill": {
+                    "displayName": "Fill",
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "calendar": {
+            "displayName": "Calendar Settings",
+            "properties": {
+                "fontColor": {
+                    "displayName": "Text Color",
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                 "fontSize": {
+                    "displayName": "Text Size",
+                    "type": {
+                        "formatting": {
+                            "fontSize": true
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "dataViewMappings": [
+        {
+            "conditions": [
+                {
+                    "activity":
+                    {
+                        "max": 1
+                    },
+                    "planDate":
+                    {
+                        "max": 1
+                    },
+                    "realDate":
+                    {
+                        "max": 1
+                    },
+                    "status":
+                    {
+                        "max": 1
+                    },
+                    "url":
+                    {
+                        "max": 1
+                    },
+                    "tooltip":
+                    {
+                        "max": 3
+                    }
+                } 
+            ],
+            
+            "categorical": {
+                "categories": {
+                    "select": [
+                        {
+                            "bind":{
+                                "to": "activity"
+                            }
+                        },
+                        {
+                            "bind":{
+                                "to": "planDate"
+                            }
+                        },
+                        {
+                            "bind":{
+                                "to": "realDate"
+                            }
+                        },
+                        {
+                            "bind":{
+                                "to": "status"
+                            }
+                        },
+                        {
+                            "bind":{
+                                "to": "url"
+                            }
+                        },
+                        {
+                            "bind":{
+                                "to": "tooltip"
+                            }
+                        }
+                    ]
+                }             
+            }
+        }
+    ],
+    "supportsHighlight" : false
+}
