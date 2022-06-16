@@ -108,6 +108,7 @@ export class Visual implements IVisual {
         for (let i = 0; i < this.columnIndices.length; i++) {
             //defining name value from our preconstructed map of names
             let name = this.columnIndices[i].name;
+            this.columnIndices[i].index = null;
             if(this.columnIndices[i].type === "array") {
                 this.columnIndices[i].indices = [];
             }
