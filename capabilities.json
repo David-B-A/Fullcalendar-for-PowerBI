@@ -136,7 +136,13 @@
                                 "to": "tooltip"
                             }
                         }
-                    ]
+                    ],
+                    
+                    "dataReductionAlgorithm": {
+                        "top": {
+                            "count": 30000
+                        }
+                    }
                 }             
             }
         }
