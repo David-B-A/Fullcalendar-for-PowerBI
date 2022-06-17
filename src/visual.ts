@@ -191,6 +191,7 @@ export class Visual implements IVisual {
             this.target.appendChild(legend);
         }
         legend.innerHTML = "Legend: ";
+        legend.style.color = this.fontColor;
         legend.style.fontSize = this.fontSize + "px";
         for(let i = 0; i < this.itemStatus.length; i++) {
             let legendItem = document.createElement("div");
@@ -206,8 +207,6 @@ export class Visual implements IVisual {
             legendItemText.style.display = "inline-block";
             legend.appendChild(legendItemText);
         }
-        legend.style.color = this.fontColor;
-        legend.style.fontSize = this.fontSize.toString() + "px";
     }
     public update(options: VisualUpdateOptions) {
         // this.settings = Visual.parseSettings(options && options.dataViews && options.dataViews[0]);
