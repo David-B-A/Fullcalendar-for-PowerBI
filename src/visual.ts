@@ -206,18 +206,28 @@ export class Visual implements IVisual {
             legendItemText.style.display = "inline-block";
             legend.appendChild(legendItemText);
         }
+        legend.style.color = this.fontColor;
+        legend.style.fontSize = this.fontSize.toString() + "px";
     }
     public update(options: VisualUpdateOptions) {
         // this.settings = Visual.parseSettings(options && options.dataViews && options.dataViews[0]);
-        let data = [];
-        if (options.dataViews.length > 0) {
-            this.dataExtraction(options.dataViews[0]);
-            this.updateSettings(options.dataViews[0]);
-            this.createLegend();
-            data = this.dataTransforming(options.dataViews[0]);
-        } else {
+        
+        //getting more data from window
+
+        if (options.dataViews.length <= 0) {
             return;
         }
+
+        if(options.dataViews[0].metadata.segment) {
+            let moreData = this.host.fetchMoreData();
+        }
+
+        let data = [];
+
+        this.dataExtraction(options.dataViews[0]);
+        this.updateSettings(options.dataViews[0]);
+        this.createLegend();
+        data = this.dataTransforming(options.dataViews[0]);
         // let FullCalendarJS = (<any>window).FullCalendar;
         let calendarTag = document.getElementById("calendar");
 
