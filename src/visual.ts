@@ -50,7 +50,9 @@ import listPlugin from '@fullcalendar/list';
 export interface ItemStatus {
     category: string | number,
     color: string,
-    selectionID: powerbi.visuals.ISelectionId
+    selectionID: powerbi.visuals.ISelectionId,
+    status: boolean,
+    objIndex: number,
 }
 
 export class Visual implements IVisual {
@@ -68,6 +70,7 @@ export class Visual implements IVisual {
     private itemStatus: ItemStatus[] = [];
     private fontColor: string;
     private fontSize: number;
+    private updateStatusColor: boolean = false;
 
     private static CalendarFontColorPropertyIdentifiers: DataViewObjectPropertyIdentifier = {
         objectName: "calendar",
@@ -139,14 +142,25 @@ export class Visual implements IVisual {
             if(temp.length === 0) {
                 let tem: ItemStatus = {
                     category: status[i].toString(),
-                    color: this.host.colorPalette.getColor(status[i].toString()).value,
-                    selectionID: this.host.createSelectionIdBuilder().withCategory(categoryColumn, i)
-                    .createSelectionId()
+                    color: '',
+                    // color: this.host.colorPalette.getColor(status[i].toString()).value,
+                    selectionID: this.host.createSelectionIdBuilder().withCategory(categoryColumn, i).createSelectionId(),
+                    status: true,
+                    objIndex: i,
                 }
                 this.itemStatus.push(tem);
             }
         }
-        
+        this.updateStatusColor = true;
+        for(let i = 0; i < this.itemStatus.length; i++) {
+            let temp = status.filter(item => item.toString() === this.itemStatus[i].category);
+            if (temp.length === 0) {
+                this.itemStatus[i].status = false;
+                this.updateStatusColor = false;
+            } else {
+                this.itemStatus[i].status = true;
+            }
+        }
     }
     private dataTransforming(dataView: DataView) {
         let categories = dataView.categorical.categories;
@@ -194,18 +208,20 @@ export class Visual implements IVisual {
         legend.style.color = this.fontColor;
         legend.style.fontSize = this.fontSize + "px";
         for(let i = 0; i < this.itemStatus.length; i++) {
-            let legendItem = document.createElement("div");
-            legendItem.style.backgroundColor = this.itemStatus[i].color;
-            legendItem.style.display = "inline-block";
-            legendItem.style.width = "0.8rem";
-            legendItem.style.height = "0.8rem";
-            legendItem.style.marginRight = "0.2rem";
-            legendItem.style.marginLeft = "0.5rem";
-            legend.appendChild(legendItem);
-            let legendItemText = document.createElement("div");
-            legendItemText.innerHTML = this.itemStatus[i].category.toString();
-            legendItemText.style.display = "inline-block";
-            legend.appendChild(legendItemText);
+            if(this.itemStatus[i].status) {
+                let legendItem = document.createElement("div");
+                legendItem.style.backgroundColor = this.itemStatus[i].color;
+                legendItem.style.display = "inline-block";
+                legendItem.style.width = "0.8rem";
+                legendItem.style.height = "0.8rem";
+                legendItem.style.marginRight = "0.2rem";
+                legendItem.style.marginLeft = "0.5rem";
+                legend.appendChild(legendItem);
+                let legendItemText = document.createElement("div");
+                legendItemText.innerHTML = this.itemStatus[i].category.toString();
+                legendItemText.style.display = "inline-block";
+                legend.appendChild(legendItemText);
+            }
         }
     }
     public update(options: VisualUpdateOptions) {
@@ -281,7 +297,7 @@ export class Visual implements IVisual {
 
         let categories = dataView.categorical.categories;
         let categoryObjects = categories[0].objects;           
-        if (categoryObjects) {
+        if (categoryObjects && this.updateStatusColor) {
             for (let i = 0; i < categoryObjects.length; i++) {
                 if (categoryObjects[i]) {
                     let chartColorObject = categoryObjects[i][Visual.CategoryColorsPropertyIdentifiers.objectName];
