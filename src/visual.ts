@@ -182,11 +182,11 @@ export class Visual implements IVisual {
                 row.url = dataView.categorical.categories[this.columnIndices[4].index].values[i];
             }
             if(this.columnIndices[5].indices) {
-                let tooltip = "";
+                let tooltip = dataView.categorical.categories[this.columnIndices[0].index].values[i];
                 for(let j = 0; j < this.columnIndices[5].indices.length; j++) {
                     let k = this.columnIndices[5].indices[j];
                     tooltip += tooltip ? " | " : "";
-                    tooltip += dataView.categorical.categories[k].values[i].toString();
+                    tooltip += dataView.categorical.categories[k]?.values[i]?.toString() || "";
                 }
                 row.description = tooltip;
             }
